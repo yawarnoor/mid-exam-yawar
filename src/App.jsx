@@ -9,6 +9,8 @@ export default class App extends Component {
     this.state = {
        nameFilter: "",
        ageFilter: "",
+       cityFilter:"",
+       occupationFilter:"",
        filteredUsers: []
     }
     this.foundName = []
@@ -39,7 +41,12 @@ CommonItemsArray(array_1, array_2) {
 handleFilter = () => {
   const filtered = sampleData.filter(user => user.name.includes(this.state.nameFilter));
   const filtered2 = sampleData.filter(user => user.age.includes(this.state.ageFilter));
-  var commonItem= this.CommonItemsArray(filtered, filtered2);
+  const filtered3 = sampleData.filter(user => user.city.includes(this.state.cityFilter));
+  const filtered4 = sampleData.filter(user => user.occupation.includes(this.state.occupationFilter));
+
+  var commonItem0 = this.CommonItemsArray(filtered, filtered2);
+  var commonItem1 = this.CommonItemsArray(commonItem0, filtered3);
+  var commonItem = this.CommonItemsArray(commonItem1, filtered4);
   
   this.setState({filteredUsers: commonItem})
   console.log(commonItem)
@@ -62,10 +69,24 @@ handleReset() {
       return (<Row key={row.id} rowData={row}/>)
     })
 
+    const optionsCity = sampleData.map((row) => {
+      return (<option value={row.city}>{row.city}</option>)
+    })
+    const optionsOccupation = sampleData.map((row) => {
+      return (<option value={row.occupation}>{row.occupation}</option>)
+    })
+
     return (
       <div>
         <input type="text" placeholder='filter name' name="nameFilter" value={this.state.nameFilter} onChange={this.handleChange} />
         <input type="text" placeholder='filter age' name="ageFilter" value={this.state.ageFilter} onChange={this.handleChange}/>
+        <select name="cityFilter" onChange={this.handleChange}>
+          {optionsCity}
+        </select>
+        <select name="occupationFilter" onChange={this.handleChange}>
+          {optionsOccupation}
+        </select>
+        <br/>
         <button onClick={this.handleFilter}>Search</button>
         <button onClick={this.handleReset}>Reset</button>
         <table>
