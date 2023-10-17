@@ -13,7 +13,7 @@ export default class App extends Component {
     }
     this.foundName = []
     this.handleChange = this.handleChange.bind(this)
-    // this.handleSearchName = this.handleSearchName.bind(this)
+    this.handleReset = this.handleReset.bind(this)
     this.handleFilter = this.handleFilter.bind(this)
 
   }
@@ -43,7 +43,15 @@ handleFilter = () => {
   
   this.setState({filteredUsers: commonItem})
   console.log(commonItem)
-};
+}
+
+handleReset() {
+  this.setState({
+    nameFilter: "",
+    ageFilter: "",
+    filteredUsers: []
+ })
+}
   
   render() {
     const rows = sampleData.map((row) => {
@@ -59,7 +67,7 @@ handleFilter = () => {
         <input type="text" placeholder='filter name' name="nameFilter" value={this.state.nameFilter} onChange={this.handleChange} />
         <input type="text" placeholder='filter age' name="ageFilter" value={this.state.ageFilter} onChange={this.handleChange}/>
         <button onClick={this.handleFilter}>Search</button>
-        <button>Reset</button>
+        <button onClick={this.handleReset}>Reset</button>
         <table>
           <tr>
             <th>ID</th>
